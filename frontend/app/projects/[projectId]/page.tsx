@@ -4,7 +4,7 @@ import { useEffect, useEffectEvent, useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, BookOpen, Captions, Download, FileText, Loader2, RefreshCw, Sparkles, Video } from "lucide-react";
 
-const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const API = process.env.NEXT_PUBLIC_API_URL;
 
 type Project = { id: string; name: string; source_type: string; source_url?: string | null; original_filename?: string | null; status: string; processing_progress: number; processing_step: string; error_message?: string | null; duration?: number | null; width?: number | null; height?: number | null; thumbnail_path?: string | null; video_file_path?: string | null; audio_path?: string | null };
 type Segment = { start: number; end: number; text: string };

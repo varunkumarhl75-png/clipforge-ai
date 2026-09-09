@@ -4,7 +4,7 @@ import Link from "next/link";
 import { ArrowLeft, Image as ImageIcon, Loader2, Sparkles, Video } from "lucide-react";
 import { useState } from "react";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+const API_BASE = process.env.NEXT_PUBLIC_API_URL;
 
 type Mode = "thumbnail" | "video";
 type Aspect = "16:9" | "9:16";

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { FolderOpen, Loader2, Play, Video } from "lucide-react";
 import { useEffect, useState } from "react";
 
-const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const API = process.env.NEXT_PUBLIC_API_URL;
 type Project = { id: string; name: string; source_type?: string; source_url?: string | null; original_filename?: string | null; status?: string; created_at?: string };
 
 function statusStyle(status?: string) { if (status === "completed") return "status-complete"; if (status === "failed") return "status-failed"; if (status === "processing") return "status-processing"; return "status-queued"; }

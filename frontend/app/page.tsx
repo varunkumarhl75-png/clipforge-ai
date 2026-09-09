@@ -28,7 +28,7 @@ import {
 } from "lucide-react";
 
 const API =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+  process.env.NEXT_PUBLIC_API_URL;
 
 type ProjectStatus =
   | "queued"
@@ -219,7 +219,7 @@ export default function Home() {
 
       setMessage({
         type: "error",
-        text: "Could not connect to the backend. Make sure FastAPI is running on port 8000.",
+        text: "Could not connect to the backend. Please check that the API server is available.",
       });
     } finally {
       setLoadingProjects(false);
