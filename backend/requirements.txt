@@ -1,0 +1,11 @@
+fastapi
+uvicorn[standard]
+sqlalchemy
+pydantic-settings
+python-multipart
+yt-dlp
+faster-whisper
+pytest
+google-api-python-client
+google-auth
+google-genai>=2.3.0

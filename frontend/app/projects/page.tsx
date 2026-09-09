@@ -1,0 +1,19 @@
+"use client";
+
+import Link from "next/link";
+import { FolderOpen, Loader2, Play, Video } from "lucide-react";
+import { useEffect, useState } from "react";
+
+const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+type Project = { id: string; name: string; source_type?: string; source_url?: string | null; original_filename?: string | null; status?: string; created_at?: string };
+
+function statusStyle(status?: string) { if (status === "completed") return "status-complete"; if (status === "failed") return "status-failed"; if (status === "processing") return "status-processing"; return "status-queued"; }
+function date(value?: string) { return value ? new Date(value).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : "Recently created"; }
+
+export default function ProjectsPage() {
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  useEffect(() => { fetch(`${API}/api/projects`).then((response) => response.ok ? response.json() : Promise.reject(new Error())).then((data) => setProjects(Array.isArray(data) ? data : [])).catch(() => setError("We couldn't load your projects. Check the backend connection and try again.")).finally(() => setLoading(false)); }, []);
+  return <main className="min-h-screen p-6 sm:p-10"><div className="mx-auto max-w-6xl"><div className="mb-10 flex items-end justify-between gap-4"><div><p className="luxury-kicker text-xs">Workspace library</p><h1 className="mt-2 text-3xl font-semibold">Projects</h1><p className="mt-2 text-slate-500">Every video project, in one place.</p></div><Link href="/#create" className="luxury-action rounded-lg px-4 py-2.5 text-sm font-semibold">Create project</Link></div>{loading ? <div className="rounded-2xl border border-stone-200 bg-white p-12 text-center shadow-sm"><Loader2 className="mx-auto animate-spin text-violet-700" /></div> : error ? <div className="rounded-2xl border border-red-200 bg-red-50 p-6 text-sm text-red-700">{error}</div> : projects.length === 0 ? <div className="rounded-2xl border border-dashed border-stone-300 bg-white p-14 text-center shadow-sm"><FolderOpen className="mx-auto h-9 w-9 text-violet-400" /><h2 className="mt-4 font-semibold">No projects yet</h2><p className="mt-2 text-sm text-slate-500">Upload a video or import an authorized YouTube video to begin.</p></div> : <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">{projects.map((project) => <article key={project.id} className="overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:border-violet-200 hover:shadow-md"><div className="flex h-32 items-center justify-center bg-[#f1ede8]"><Video className="h-8 w-8 text-violet-300" /></div><div className="p-5"><div className="flex items-start justify-between gap-3"><div className="min-w-0"><h2 className="truncate font-semibold">{project.name}</h2><p className="mt-1 truncate text-xs text-slate-500">{project.original_filename || project.source_url || "Uploaded video"}</p></div><span className={`rounded-full border px-2.5 py-1 text-[11px] font-medium ${statusStyle(project.status)}`}>{project.status || "queued"}</span></div><div className="mt-5 flex items-center justify-between text-xs text-slate-500"><span>{date(project.created_at)}</span><span>{project.source_type === "youtube_url" ? "YouTube" : "Upload"}</span></div><Link href={`/projects/${project.id}`} className="mt-5 flex items-center justify-center gap-2 rounded-lg border border-stone-200 px-3 py-2.5 text-sm font-semibold text-violet-800 hover:bg-violet-50"><Play className="h-4 w-4" /> Open project</Link></div></article>)}</div>}</div></main>;
+}

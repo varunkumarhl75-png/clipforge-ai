@@ -1,0 +1,69 @@
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Backend
+backend/venv/
+backend/__pycache__/
+backend/*.pyc
+backend/.pytest_cache/
+backend/app/db/clipforge.db
+backend/app/db/*.db
+backend/.mypy_cache/
+backend/dist/
+backend/build/
+backend/*.egg-info/
+
+# Frontend
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/dist/
+frontend/.env.local
+frontend/.env.*.local
+
+# Storage
+storage/uploads/*
+storage/processed/*
+storage/temporary/*
+!storage/uploads/.gitkeep
+!storage/processed/.gitkeep
+!storage/temporary/.gitkeep
+
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE
+.vscode/
+.idea/
+*.code-workspace
+
+# Root Python virtual environment
+.venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+
+# Backend generated/storage files
+backend/storage/*
+!backend/storage/processed/.gitkeep
+!backend/storage/temporary/.gitkeep
+!backend/storage/uploads/.gitkeep
+
+# Generated media
+*.mp4
+*.wav
+*.srt
+*.vtt
+*.jpg
+*.jpeg
+*.png
+

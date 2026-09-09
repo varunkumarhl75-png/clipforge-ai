@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+:root { --ivory: #f7f4ef; --paper: #fffdfa; --ink: #211f27; --muted: #716c78; --line: #e7dfd6; --royal: #50358d; --royal-dark: #3d2774; --lavender: #f1ecfa; --gold: #aa884c; --green: #277653; --red: #a34747; }
+* { box-sizing: border-box; }
+html { min-width: 320px; background: var(--ivory); }
+body { margin: 0; min-height: 100vh; color: var(--ink); background: var(--ivory); background-image: linear-gradient(135deg, rgba(255,253,250,.72), rgba(247,244,239,.92)); font-family: "Avenir Next", "Segoe UI", sans-serif; letter-spacing: 0; }
+button, input, select, textarea { font: inherit; }
+button, a { transition: color 180ms ease, background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease; }
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 3px solid rgba(81, 53, 143, .28); outline-offset: 2px; }
+::selection { color: white; background: var(--royal); }
+.app-shell { min-height: 100vh; display: flex; }
+.app-sidebar { position: fixed; inset: 0 auto 0 0; z-index: 40; display: flex; width: 264px; flex-direction: column; border-right: 1px solid var(--line); background: rgba(255,253,250,.98); padding: 28px 16px 18px; box-shadow: 8px 0 30px rgba(57,43,28,.045); }
+.app-content { min-width: 0; width: 100%; margin-left: 264px; }
+.app-content > .min-h-screen > .flex > aside { display: none; }
+.app-content > .min-h-screen > .sticky { display: none; }
+.app-content > .min-h-screen > .flex > main { margin-left: 0 !important; }
+.app-content > .min-h-screen { color: var(--ink) !important; background: transparent !important; }
+.app-content [class*="text-white"] { color: var(--ink) !important; }
+.app-content [class*="bg-[#101116]"], .app-content [class*="bg-[#08090c]"], .app-content [class*="bg-[#07090E]"], .app-content [class*="bg-obsidian"] { background: transparent !important; }
+.app-content [class*="bg-black/70"] { background: rgba(33,31,39,.28) !important; }
+.brand-lockup { display: flex; gap: 11px; align-items: flex-start; padding: 0 10px 30px; }
+.brand-mark { display: grid; place-items: center; width: 38px; height: 38px; flex: 0 0 auto; border-radius: 11px; color: white; background: var(--royal); box-shadow: 0 7px 16px rgba(81,53,143,.2); }
+.brand-mark svg { width: 18px; height: 18px; }
+.brand-name { margin: 1px 0 3px; color: var(--ink); font-size: 15px; font-weight: 700; letter-spacing: .01em; }
+.brand-name span { color: var(--royal); }
+.brand-tagline { max-width: 158px; margin: 0; color: var(--muted); font-size: 10px; line-height: 1.45; }
+.app-nav { display: grid; gap: 5px; border-top: 1px solid #eee7df; padding-top: 18px; }
+.app-nav-item { display: flex; align-items: center; gap: 11px; border-left: 2px solid transparent; border-radius: 10px; padding: 10px 12px; color: #68616d; font-size: 13px; font-weight: 600; text-decoration: none; }
+.app-nav-item svg { width: 17px; height: 17px; }
+.app-nav-item:hover { color: var(--royal); background: #f7f3fc; }
+.app-nav-item.is-active { border-left-color: var(--gold); color: var(--royal); background: var(--lavender); }
+.sidebar-note { display: flex; gap: 9px; margin-top: auto; border: 1px solid #eadfca; border-radius: 12px; padding: 12px; color: var(--gold); background: #fcf8ef; font-size: 11px; }
+.sidebar-note svg { width: 16px; height: 16px; flex: 0 0 auto; }
+.sidebar-note strong { display: block; color: var(--ink); font-size: 11px; }
+.sidebar-note p { margin: 4px 0 0; color: var(--muted); line-height: 1.45; }
+.creator-signature { display: grid; gap: 3px; margin: 18px 8px 0; border-top: 1px solid #e9e0d7; padding: 15px 2px 0; color: #6f6870; }
+.creator-signature span { font-size: 10px; font-weight: 700; letter-spacing: .13em; }
+.creator-signature small { color: #9a9190; font-size: 9px; letter-spacing: .1em; }
+.mobile-menu { position: fixed; right: 16px; top: 14px; z-index: 60; display: none; width: 38px; height: 38px; place-items: center; border: 1px solid var(--line); border-radius: 9px; color: var(--ink); background: var(--paper); box-shadow: 0 5px 14px rgba(40,30,20,.08); }
+.mobile-menu svg { width: 18px; height: 18px; }
+.sidebar-overlay { position: fixed; inset: 0; z-index: 30; border: 0; background: rgba(34,29,40,.25); }
+.luxury-panel { border: 1px solid var(--line); background: var(--paper); box-shadow: 0 10px 26px rgba(58,43,25,.05); }
+.luxury-panel:hover { border-color: #d7c9eb; box-shadow: 0 15px 30px rgba(81,53,143,.08); }
+.luxury-title { color: var(--ink); }
+.luxury-action { min-height: 42px; color: white; background: var(--royal); box-shadow: 0 7px 15px rgba(81,53,143,.16); }
+.luxury-action:hover { background: var(--royal-dark); box-shadow: 0 10px 20px rgba(81,53,143,.2); }
+.luxury-kicker { color: var(--gold); letter-spacing: .16em; text-transform: uppercase; }
+.status-complete { border-color: #b9ddc9; color: #277653; background: #eef8f1; }
+.status-processing { border-color: #c9d8ef; color: #315d91; background: #f0f5fb; }
+.status-queued { border-color: #ead8ad; color: #8c692c; background: #fcf7e9; }
+.status-failed { border-color: #ecc6c6; color: #a34747; background: #fff1f1; }
+main.min-h-screen { min-height: 100vh; background: transparent !important; color: var(--ink) !important; }
+main.min-h-screen h1 { color: var(--ink) !important; }
+main.min-h-screen > div > section, main.min-h-screen > div > form { border-color: var(--line); background: var(--paper); box-shadow: 0 10px 26px rgba(58,43,25,.05); }
+main.min-h-screen [class*="text-white"] { color: var(--ink) !important; }
+main.min-h-screen [class*="text-zinc-500"], main.min-h-screen [class*="text-zinc-400"], main.min-h-screen [class*="text-zinc-600"], main.min-h-screen [class*="text-slate-500"] { color: var(--muted) !important; }
+main.min-h-screen [class*="border-white"] { border-color: var(--line) !important; }
+main.min-h-screen [class*="bg-white/"] { background-color: rgba(255,253,250,.8) !important; }
+main.min-h-screen [class*="bg-black/"] { background-color: #fbf9f6 !important; }
+main.min-h-screen input, main.min-h-screen select, main.min-h-screen textarea { color: var(--ink) !important; background: var(--paper) !important; border-color: #ddd5cc !important; }
+main.min-h-screen input:focus, main.min-h-screen select:focus, main.min-h-screen textarea:focus { border-color: var(--royal) !important; box-shadow: 0 0 0 3px rgba(81,53,143,.12); }
+@media (max-width: 767px) { .app-sidebar { transform: translateX(-100%); transition: transform 180ms ease; } .app-sidebar.is-open { transform: translateX(0); } .app-content { margin-left: 0; } .mobile-menu { display: grid; } }
