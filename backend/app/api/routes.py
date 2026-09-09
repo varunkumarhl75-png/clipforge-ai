@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, StreamingResponse
 from sqlalchemy.orm import Session
 from pathlib import Path
 import uuid
@@ -1080,6 +1080,7 @@ def generate_shorts(
                 "analysis_source": short.analysis_source or "local",
                 "end": short.start + short.duration,
                 "status": short.status,
+                "video_url": f"/api/shorts/{short.id}/video",
             }
             for short in created
         ]
@@ -1133,27 +1134,44 @@ def short_video(
     sid: str,
     db: Session = Depends(get_db)
 ):
+    logging.info(f"Video request for short: {sid}")
+
     short = (
         db.query(Short)
         .filter_by(id=sid)
         .first()
     )
 
-    file_path = (
-        Path(short.video_path or "")
-        if short
-        else Path("")
-    )
-
-    if not file_path.exists():
+    if not short or not short.video_path:
+        logging.warning(f"Short not found: {sid}")
         raise HTTPException(
             status_code=404,
-            detail="Short not available"
+            detail="Short not found"
         )
 
+    file_path = Path(short.video_path)
+    logging.info(f"Video path from DB: {file_path}")
+
+    # Resolve relative paths from the backend directory
+    if not file_path.is_absolute():
+        # Get the directory of the routes.py file, go up to app, then to backend
+        backend_root = Path(__file__).parent.parent.parent
+        file_path = backend_root / file_path
+        logging.info(f"Resolved path: {file_path}")
+
+    if not file_path.exists():
+        logging.error(f"Video file not found: {file_path}")
+        raise HTTPException(
+            status_code=404,
+            detail=f"Video file not found: {file_path}"
+        )
+
+    logging.info(f"Serving video: {file_path}")
+    # Use FileResponse which handles range requests and streaming automatically
     return FileResponse(
-        file_path,
-        media_type="video/mp4"
+        str(file_path),
+        media_type="video/mp4",
+        filename=f"{sid}.mp4"
     )
 
 

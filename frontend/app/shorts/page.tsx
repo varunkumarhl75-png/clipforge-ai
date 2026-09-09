@@ -42,8 +42,11 @@ const qualityOptions: [Quality, string, string][] = [
 
 function ShortCard({ short }: { short: Short }) {
   const [expanded, setExpanded] = useState(false);
+  const [previewError, setPreviewError] = useState(false);
   const scorePercent = short.score ? Math.round(short.score) : 0;
   const confidencePercent = short.confidence ? Math.round(short.confidence * 100) : 0;
+
+  const previewUrl = short.video_url ? `${API}${short.video_url}` : null;
 
   return (
     <div className="rounded-2xl border border-stone-200 bg-white p-5 shadow-sm">
@@ -86,6 +89,28 @@ function ShortCard({ short }: { short: Short }) {
           </span>
         )}
       </div>
+
+      {previewUrl && !previewError && (
+        <div className="mt-4">
+          <p className="text-xs font-medium text-slate-700 mb-2">Preview</p>
+          <div className="bg-slate-900 rounded-xl overflow-hidden" style={{ aspectRatio: "9 / 16" }}>
+            <video
+              src={previewUrl}
+              controls
+              playsInline
+              crossOrigin="anonymous"
+              className="w-full h-full"
+              onError={() => setPreviewError(true)}
+            />
+          </div>
+        </div>
+      )}
+
+      {previewError && (
+        <div className="mt-4 rounded-lg bg-amber-50 p-3 text-xs text-amber-800">
+          Preview unavailable
+        </div>
+      )}
 
       <button
         onClick={() => setExpanded(!expanded)}
@@ -163,9 +188,9 @@ function ShortCard({ short }: { short: Short }) {
         </div>
       )}
 
-      {short.video_url && (
+      {previewUrl && (
         <a
-          href={short.video_url}
+          href={previewUrl}
           download
           className="mt-4 block rounded-lg border border-slate-200 bg-white px-3 py-2 text-center text-sm font-medium text-slate-700 hover:bg-slate-50"
         >
